@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EARModule/EARModule.iml" filepath="$PROJECT_DIR$/EARModule/EARModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EJBModule/EJBModule.iml" filepath="$PROJECT_DIR$/EJBModule/EJBModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task7.iml" filepath="$PROJECT_DIR$/Task7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WARModule/WARModule.iml" filepath="$PROJECT_DIR$/WARModule/WARModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EARModule/user-manager-ear.iml" filepath="$PROJECT_DIR$/EARModule/user-manager-ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EJBModule/user-manager-ejb.iml" filepath="$PROJECT_DIR$/EJBModule/user-manager-ejb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WARModule/user-manager-webapp.iml" filepath="$PROJECT_DIR$/WARModule/user-manager-webapp.iml" />
+    </modules>
+  </component>
+</project>

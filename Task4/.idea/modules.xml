@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Task4.iml" filepath="$PROJECT_DIR$/Task4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messageEARModule/messageEARModule.iml" filepath="$PROJECT_DIR$/messageEARModule/messageEARModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messageEJB-APIModule/messageEJB-APIModule.iml" filepath="$PROJECT_DIR$/messageEJB-APIModule/messageEJB-APIModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messageEJBModule/messageEJBModule.iml" filepath="$PROJECT_DIR$/messageEJBModule/messageEJBModule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/messageWARModule/messageWARModule.iml" filepath="$PROJECT_DIR$/messageWARModule/messageWARModule.iml" />
+    </modules>
+  </component>
+</project>

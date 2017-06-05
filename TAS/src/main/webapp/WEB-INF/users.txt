@@ -1,0 +1,3 @@
+Admin~/AdminServlet
+Manager~/ManagerServlet
+Worker~/WorkerServlet
