@@ -8,7 +8,6 @@ def diffalg(a, b):
     for block in seq.get_matching_blocks():
         ai = block[0]
         if block[2] != 0:
-            string.append(a[ai])
-        elif len(string) == 0 or string[len(string) - 1] != a[ai - 1]:
-            string.append(a[ai - 1])
+            for i in range(block[2]):
+                string.append(a[ai+i])
     return string
