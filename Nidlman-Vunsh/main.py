@@ -1,118 +1,78 @@
-from io import StringIO
-from time import time
-
 from diff_algorithm import diffalg
 from myalg_v2 import alg
 
+import time
 import chardet
+import re
+import itertools
 
-fIn = open('Input3.txt', "rb")
+fIn = open('One.txt', "rb")
 strIn = fIn.read()
 fIn.close()
 
 enc = chardet.detect(strIn).get("encoding")
 strIn = strIn.decode(enc)
-strIn.lower()
-strings = strIn.split("\r\n")
-words = [string.split(" ") for string in strings]
-
+strIn = strIn.lower()
+strings = strIn.split("\r\n\r\n")
 fOut = open('Output.txt', "w")
-result = []
+maxnum = 120
+m = 2
 outlen = 10
+for k in range(len(strings)):
+    result = []
+    instrings = strings[k].split(" +-?\r\n")
+    workstrings = set(instrings)
+    n = len(workstrings)
+    ident = (1 - n / len(instrings)) * 100
 
-#Первый запуск
+    totalnum = n * (n - 1)
+    while m <= n and totalnum < maxnum:
+        totalnum *= n - m
+        m += 1
+    m -= 1
 
-#Мой алгоритм
-time1 = time()
-res = alg(words[0], words[1])
-for i in range(len(words) - 2):
-    res = alg(res, words[i + 2])
-    if len(res) == 0:
-        break
-time1 = time() - time1
+    words = [re.split(r' |\r\n', string) for string in workstrings]
+    perms = list(itertools.permutations(words, m))
+    algtime = time.time()
+    for i in range(len(perms)):
+        perm = list(perms[i])
 
-file_res = StringIO()
-for word in res:
-    file_res.write("%*s" % (outlen, word))
-file_res.write("\n")
-fOut.write(file_res.getvalue())
-#
+        # Мой алгоритм
+        res = alg(perm[0], perm[1])
+        for j in range(2, m):
+            res = alg(res, perm[j])
+            if len(res) == 0:
+                break
+        for j in range(n):
+            if not perm.__contains__(words[j]):
+                res = alg(res, words[j])
+            if len(res) == 0:
+                break
+        #
+        # Обновление результата
+        if (len(result) < len(res)) | ((len(result) == len(res)) & (len(result.__str__()) < len(res.__str__()))):
+            result = res
 
-#Обновление результата
-if (len(result) < len(res))|((len(result) == len(res))&(len(result.__str__()) < len(res.__str__()))):
-    result = res
+        # SequenceMatcher
+        res = diffalg(perm[0], perm[1])
+        for j in range(2, m):
+            res = diffalg(res, perm[j])
+            if len(res) == 0:
+                break
+        for j in range(n):
+            if not perm.__contains__(words[j]):
+                res = diffalg(res, words[j])
+            if len(res) == 0:
+                break
+        #
+        # Обновление результата
+        if (len(result) < len(res)) | ((len(result) == len(res)) & (len(result.__str__()) < len(res.__str__()))):
+            result = res
+    algtime = time.time() - algtime
 
-#SequenceMatcher
-time2 = time()
-res = diffalg(words[0], words[1])
-for i in range(len(words) - 2):
-    res = diffalg(res, words[i + 2])
-    if len(res) == 0:
-        break
-time2 = time() - time2
-
-file_res = StringIO()
-for word in res:
-    file_res.write("%*s" % (outlen, word))
-file_res.write("\n")
-fOut.write(file_res.getvalue())
-#
-
-#Обновление результата
-if (len(result) < len(res))|((len(result) == len(res))&(len(result.__str__()) < len(res.__str__()))):
-    result = res
-
-#Вывод времени
-fOut.write("My alg:%*f \t\tSequenceMatcher: %f\n\n" % (outlen, time1, time2))
-
-#Конец первого запуска
-
-#Второй запуск
-
-#Мой алгоритм
-time1 = time()
-res = alg(words[1], words[0])
-for i in range(len(words) - 2):
-    res = alg(res, words[i + 2])
-    if len(res) == 0:
-        break
-time1 = time() - time1
-
-file_res = StringIO()
-for word in res:
-    file_res.write("%*s" % (outlen, word))
-file_res.write("\n")
-fOut.write(file_res.getvalue())
-#
-
-#Обновление результата
-if (len(result) < len(res))|((len(result) == len(res))&(len(result.__str__()) < len(res.__str__()))):
-    result = res
-
-#SequenceMatcher
-time2 = time()
-res = diffalg(words[1], words[0])
-for i in range(len(words) - 2):
-    res = diffalg(res, words[i + 2])
-    if len(res) == 0:
-        break
-time2 = time() - time2
-
-file_res = StringIO()
-for word in res:
-    file_res.write("%*s" % (outlen, word))
-file_res.write("\n")
-fOut.write(file_res.getvalue())
-#
-
-#Обновление результата
-if (len(result) < len(res))|((len(result) == len(res))&(len(result.__str__()) < len(res.__str__()))):
-    result = res
-
-#Обновление времени
-fOut.write("My alg:%*f \t\tSequenceMatcher: %f\n\n" % (outlen, time1, time2))
-
-#Конец второго запуска
-
-fOut.write("Result: "+result.__str__())
+    fOut.write("Total repetitions: " + len(instrings).__str__() +
+               "\nIdentical repetitions: " + (len(instrings) - n).__str__() + " - " + ident.__str__() +
+               "%\nTotal permutations: " + len(perms).__str__() +
+               "\nTime: " + algtime.__str__() + " sec." +
+               "\nResult: " + result.__str__() + "\n\n\n")
 fOut.close()
